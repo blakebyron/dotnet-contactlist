@@ -1,5 +1,7 @@
 # Contact List
 
+![CI](https://github.com/blakebyron/dotnet-contactlist/workflows/CI/badge.svg)
+
 ## Description
 
 The main goal of this project is to demonstrate the use of concepts from domain driven design.
