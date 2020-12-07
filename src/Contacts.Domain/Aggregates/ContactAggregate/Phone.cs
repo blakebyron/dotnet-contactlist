@@ -30,7 +30,7 @@ namespace Contacts.Domain.Aggregates.ContactAggregate
         public string Number { get; private set; }
         public PhoneNumber(string number)
         {
-            this.Number = number;
+            Number = number ?? throw new ArgumentNullException(nameof(number));
         }
     }
 }
