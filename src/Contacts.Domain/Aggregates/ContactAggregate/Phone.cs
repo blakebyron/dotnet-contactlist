@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Contacts.Domain.Aggregates.ContactAggregate
 {
-    public class Phone
+    public class Phone : ValueObject
     {
 
         public PhoneDescription Description { get; private set; }
@@ -13,24 +15,39 @@ namespace Contacts.Domain.Aggregates.ContactAggregate
             this.Number = number;
         }
 
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Description;
+            yield return Number;
+
+        }
     }
 
-    public class PhoneDescription
+    public class PhoneDescription: ValueObject
     {
         public string Description { get; private set; }
 
         public PhoneDescription(string description)
         {
-            this.Description = description;
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+        }
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Description;
+
         }
     }
 
-    public class PhoneNumber
+    public class PhoneNumber: ValueObject
     {
         public string Number { get; private set; }
         public PhoneNumber(string number)
         {
             Number = number ?? throw new ArgumentNullException(nameof(number));
+        }
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return Number;
         }
     }
 }

@@ -3,26 +3,31 @@ using MediatR;
 
 namespace Contacts.Domain.Aggregates.ContactAggregate
 {
-    public class PhoneNumberCreatedEvent : DomainEventBase
+    public class ContactCreatedEvent:DomainEvent
     {
-        public string PhoneDescription { get; private set; }
-        public string PhoneNumber { get; private set; }
 
-        public PhoneNumberCreatedEvent(string phoneDescription, string phoneNumber)
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string OrganisationName { get; set; }
+
+        public ContactCreatedEvent(Guid ID, Int32 version, string firstName, string lastName, string organisationName)
         {
-            this.PhoneDescription = phoneDescription;
-            this.PhoneNumber = phoneNumber;
+            this.ID = ID;
+            this.Version = version;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.OrganisationName = organisationName;
         }
     }
 
-    public class ContactCreatedEvent:DomainEventBase
+    public class PhoneNumberCreatedEvent : DomainEvent
     {
-        //Todo Add fields which are populated as part of the create
-        public Contact Contact { get; set; }
+        public Phone Phone { get; set; }
 
-        public ContactCreatedEvent(Contact contact)
+        public PhoneNumberCreatedEvent(Int32 version, Phone phone)
         {
-            this.Contact = contact;
+            this.Version = version;
+            this.Phone = phone;
         }
     }
 }

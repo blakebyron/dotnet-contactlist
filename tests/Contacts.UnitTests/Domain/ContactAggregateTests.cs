@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Contacts.Domain.Aggregates.ContactAggregate;
 using Xunit;
 
@@ -11,49 +12,25 @@ namespace Contacts.UnitTests.Domain
         }
 
 
-        [Fact]
-        public void Create_Valid_PhoneNumber()
-        {
-            //Arrange
-            string phoneNumber = "07123456789";
-            //Act
-            var sut = new PhoneNumber(phoneNumber);
-            //Assert
-            Assert.NotNull(sut);
-        }
 
-        [Fact]
-        public void Create_Null_PhoneNumber()
-        {
-            //Arrange
-            string phoneNumber = null;
-            //Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new PhoneNumber(phoneNumber));
-        }
-
-        //[Fact]
-        //public void Create_Invalid_PhoneNumber()
-        //{
-        //    //Arrange
-        //    string phoneNumber = "ASDASD";
-        //    //Act & Assert
-        //    Assert.Throws<ArgumentException>(() => new PhoneNumber(phoneNumber));
-        //}
 
         [Fact]
         public void CreateWithFirstLastAndOrgansiationName()
         {
             //Arrange
-            string firstName = "Paul";
-            string lastName = "Smith";
+            var builder = new ContactBuilder()
+                                .WithDefaultValues();
 
             //Act
-            var contact = Contact.CreateWithFirstAndLastNameWithOrganisation(firstName, lastName, string.Empty);
+            var contact = builder.Build();
 
             //Assert
             Assert.NotNull(contact);
             Assert.Single(contact.Events);
-            Assert.True(contact.Events.Exists(f => f.GetType() == typeof(ContactCreatedEvent)));
+            Assert.Equal(1, contact.Version);
+            var e = contact.Events.First();
+            Assert.IsType<ContactCreatedEvent>(e);
+            Assert.Equal(contact.ID, e.ID);
 
         }
 
@@ -65,15 +42,22 @@ namespace Contacts.UnitTests.Domain
             string lastName = "Smith";
             PhoneDescription phoneDescription = new PhoneDescription("Mobile");
             PhoneNumber phoneNumber = new PhoneNumber("01234567890");
+            var mobilePhone = new Phone(phoneDescription, phoneNumber);
 
             //Act
             var contact = Contact.CreateWithFirstAndLastNameWithOrganisation(firstName, lastName, string.Empty);
-            contact.AddPhone(new Phone(phoneDescription, phoneNumber));
+            contact.AddPhone(mobilePhone);
 
             //Assert
             Assert.NotNull(contact);
             Assert.Equal(2, contact.Events.Count);
-            Assert.True(contact.Events.Exists(f => f.GetType() == typeof(ContactCreatedEvent)));
+            Assert.Equal(2, contact.Version);
+            Assert.IsType<ContactCreatedEvent>(contact.Events.First());
+            Assert.IsType<PhoneNumberCreatedEvent>(contact.Events.Last());
+            Assert.Equal(1, contact.PhoneNumbers.Count);
+            var phone = contact.PhoneNumbers.First();
+            Assert.NotNull(phone);
+            Assert.Equal(mobilePhone, phone);
         }
     }
 }
