@@ -10,6 +10,12 @@ namespace Contacts.Domain.Aggregates.ContactAggregate
         public string LastName { get; set; }
         public string OrganisationName { get; set; }
 
+        //public DateTime EventDateTime { get; set; }
+
+        //public Guid ID { get; set; }
+
+        //public int Version { get; set; }
+
         public ContactCreatedEvent(Guid ID, Int32 version, string firstName, string lastName, string organisationName)
         {
             this.ID = ID;

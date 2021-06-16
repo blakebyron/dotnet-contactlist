@@ -6,6 +6,7 @@ namespace Contacts.Domain.Aggregates.ContactAggregate
 {
     public class Contact: AggregateRoot
     {
+        private readonly Dictionary<Type, Action<IDomainEvent>> handlers = new Dictionary<Type, Action<IDomainEvent>>();
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -24,6 +25,29 @@ namespace Contacts.Domain.Aggregates.ContactAggregate
         protected Contact():base()
         {
             this._PhoneNumbers = new List<Phone>();
+        }
+
+
+        protected void Handles<TEvent>(Action<TEvent> handler)
+        {
+            this.handlers.Add(typeof(TEvent), @event => handler((TEvent)@event));
+        }
+
+        public Contact(Guid id, IEnumerable<IDomainEvent> historicEvents) : this()
+        {
+            Handles<ContactCreatedEvent>(this.Update);
+            Handles<PhoneNumberCreatedEvent>(this.Update);
+
+            this.LoadFrom(historicEvents);
+        }
+
+        protected void LoadFrom(IEnumerable<IDomainEvent> pastEvents)
+        {
+            foreach (var e in pastEvents)
+            {
+                this.handlers[e.GetType()].Invoke(e);
+                //this.version = e.Version;
+            }
         }
 
         protected void Update(ContactCreatedEvent @event)

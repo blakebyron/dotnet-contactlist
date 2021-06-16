@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.UnitTests", "tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.Infrastructure", "src\Contacts.Infrastructure\Contacts.Infrastructure.csproj", "{21C5D7B5-8903-4FFD-B8EE-1B87B52A8ABC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.IntegrationTests", "tests\Contacts.IntegrationTests\Contacts.IntegrationTests.csproj", "{20CD501C-91AA-4861-AA37-321A07343A2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{21C5D7B5-8903-4FFD-B8EE-1B87B52A8ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21C5D7B5-8903-4FFD-B8EE-1B87B52A8ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21C5D7B5-8903-4FFD-B8EE-1B87B52A8ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20CD501C-91AA-4861-AA37-321A07343A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20CD501C-91AA-4861-AA37-321A07343A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20CD501C-91AA-4861-AA37-321A07343A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20CD501C-91AA-4861-AA37-321A07343A2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +44,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7005B8B2-B637-4DA4-A066-F086FCCAF521} = {C4DBD145-4FAD-4028-AA4E-B5262B5BCC86}
+		{20CD501C-91AA-4861-AA37-321A07343A2B} = {C4DBD145-4FAD-4028-AA4E-B5262B5BCC86}
 	EndGlobalSection
 EndGlobal
